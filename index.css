@@ -1,0 +1,20 @@
+body {
+    padding: 10px;
+    margin: 0;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+.stage-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 2px solid rgb(218, 218, 218);
+    width: 100vw;
+    height: 100vh;
+    cursor: crosshair;
+}
+
+#grid-container { z-index: 0; }
+#modelspace-container { z-index: 1; }
