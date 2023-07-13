@@ -1,4 +1,5 @@
 import { lineDrawMousedown, lineDrawMousemove } from './lineDraw.js';
+import { selectionMousedown, selectionMousemove } from './selectShape.js';
 import { gridDraw } from './gridDraw.js';
 import { handleKeys, handleKeyUp } from './handleKeys.js';
 import { zoomStage } from './zoomStage.js';
@@ -6,7 +7,7 @@ import { panStage } from './panStage.js';
 import { snapDetect, snapIndicatorScale } from './snapSystem.js';
 
 var container = document.getElementById("modelspace-container");
-var detectMode = true, lineMode = false, orthoMode = false;
+var selectionMode = true, lineMode = false, orthoMode = false;
 var isPanning = false, isDrawing = false;
 var snapState = {state: false, point: null};
 let zoomStep = 0.1, isZoomin = false, scaleStage = 1, scaleGrid = 1;
@@ -38,7 +39,6 @@ gridLayer.opacity(0.5);
 stage.add(defaultLayer);
 gridStage.add(gridLayer);
 
-
 // UPDATE STAGES
 function updateStageSize(scaleStage) {
     container = document.getElementById("modelspace-container");
@@ -59,8 +59,8 @@ function updateStageSize(scaleStage) {
 // HANDLE KEYPRESS
 document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('keydown', function(event) {
-        const modes = handleKeys(event, detectMode, lineMode, isDrawing, orthoMode);
-        detectMode = modes.detectMode;
+        const modes = handleKeys(event, selectionMode, lineMode, isDrawing, orthoMode);
+        selectionMode = modes.selectionMode;
         lineMode = modes.lineMode;
         isDrawing = modes.isDrawing;
         orthoMode = modes.orthoMode;
@@ -79,6 +79,9 @@ stage.on('mousedown', function(e) {
             lineDrawMousedown(stage, defaultLayer, orthoMode); 
             isDrawing = true;
         }
+        if (selectionMode) {
+            selectionMousedown(stage, defaultLayer);
+        }
     }
     if (e.evt.button === 1) {
         // middle mouse click
@@ -94,13 +97,13 @@ stage.on('mousemove', function(e) {
         // Store snap state if drawing
         if (isDrawing){ 
             snapState = snapDetect(stage, defaultLayer, pointer, isDrawing, orthoMode);
-        } 
-        else { snapDetect(stage, defaultLayer, pointer, isDrawing, orthoMode);}
-        
-        // Facilitate dynamic line
+        } else { 
+            snapDetect(stage, defaultLayer, pointer, isDrawing, orthoMode);
+        }
         lineDrawMousemove(stage, scaleStage, defaultLayer, snapState.state, snapState.point, orthoMode);
     }
-    if (detectMode) { 
+    if (selectionMode) { 
+        selectionMousemove(stage);
     }
     if (isPanning) { 
         e.evt.preventDefault();

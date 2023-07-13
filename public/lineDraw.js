@@ -91,6 +91,5 @@ document.addEventListener("keydown", (event) => {
         line = null;
         isLineInit = false;
         isDrawing = false;
-        console.log("Line is cancelled")
     }
 });
