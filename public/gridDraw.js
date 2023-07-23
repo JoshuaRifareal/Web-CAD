@@ -1,4 +1,5 @@
 var gridColor = 'lightgray'; // Color of the grid lines
+var gridWidth = 0.2;
 
 export function gridDraw(gridStage, gridLayer, gridSize, scaleStage) {
   // Clear the layer 
@@ -15,7 +16,7 @@ export function gridDraw(gridStage, gridLayer, gridSize, scaleStage) {
       x: -(numCols * gridSize),
       points: [x, -(numRows * gridSize), x, (numRows * gridSize)],
       stroke: gridColor,
-      strokeWidth: 1,
+      strokeWidth: gridWidth,
       strokeScaleEnabled: false
     }); gridLayer.add(vertDown);
   }
@@ -27,7 +28,7 @@ export function gridDraw(gridStage, gridLayer, gridSize, scaleStage) {
       y: -(numRows * gridSize),
       points: [-(numCols * gridSize), y, (numCols * gridSize), y],
       stroke: gridColor,
-      strokeWidth: 1,
+      strokeWidth: gridWidth,
       strokeScaleEnabled: false,
     }); gridLayer.add(horiRight);
   }
@@ -35,14 +36,14 @@ export function gridDraw(gridStage, gridLayer, gridSize, scaleStage) {
   var originY = new Konva.Line({
     y: -(numRows * gridSize),
     points: [0, 0, 0, (numRows * gridSize)*2],
-    stroke: 'red',
+    stroke: 'green',
     strokeWidth: 1,
     strokeScaleEnabled: false
   }); gridLayer.add(originY);
   var originX = new Konva.Line({
     x: -(numCols * gridSize),
     points: [0, 0, (numCols * gridSize)*2, 0],
-    stroke: 'blue',
+    stroke: 'red',
     strokeWidth: 1,
     strokeScaleEnabled: false
   }); gridLayer.add(originX);

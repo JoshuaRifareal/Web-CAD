@@ -1,4 +1,5 @@
 var detectArea = 20; // Margin of error for Detection
+const isCircle = false, isSquare = true;
 var circle = new Konva.Circle({
     id: 'snapIndicator',
     radius: 5,
@@ -8,9 +9,19 @@ var circle = new Konva.Circle({
     perfectDrawEnabled: false,
     strokeScaleEnabled: false
 });
+var square = new Konva.Rect({
+    width: 10,
+    height: 10,
+    fill: 'yellow',
+    stroke: 'red',
+    strokeWidth: 1,
+    perfectDrawEnabled: false,
+    strokeScaleEnabled: false
+})
 
 export function snapDetect(stage, defaultLayer, pointer, isDrawing, orthoMode) {
     var lineCollection = stage.find('.line'); // Get all the shapes on the stage
+    var snapPosition = {x: null, y: null};
 
     if (lineCollection.length > 0) {
         var foundShape = false; // Flag to track if a suitable line shape is found
@@ -35,33 +46,50 @@ export function snapDetect(stage, defaultLayer, pointer, isDrawing, orthoMode) {
                 (pointer.y >= (endY - detectArea) && pointer.y <= (endY + detectArea));
 
             if (nearStartPoint || nearEndPoint) {
-                circle.position({
-                    x: nearStartPoint ? startX : endX,
-                    y: nearStartPoint ? startY : endY
-                });
+                snapPosition.x = nearStartPoint ? startX : endX;
+                snapPosition.y = nearStartPoint ? startY : endY;
                 
-                circle.moveToTop();
-
-                defaultLayer.add(circle);
-                defaultLayer.batchDraw();
+                snapAnchor(defaultLayer, snapPosition.x, snapPosition.y);
 
                 foundShape = true;
-                return {state: true, point: circle.position()};
+                return {state: true, point: snapPosition};
             }
         }
 
         if (!foundShape) {
             circle.remove();
+            square.remove();
+
             defaultLayer.batchDraw();
             return {state: false, point: null};
         }
     }
 }
 
-export function snapIndicatorScale(scale) {
+export function snapAnchorScale(defaultLayer, scale) {
     var circleScale = 5 / scale;
+    var squareScale = 10 / scale;
     var detectAreaScale = 20 / scale;
 
     detectArea = (Math.min(Math.max(detectAreaScale, 20), 100));
     circle.radius(Math.min(Math.max(circleScale, 1.5), 25));
+    square.width(Math.min(Math.max(squareScale, 5), 40));
+    square.height(Math.min(Math.max(squareScale, 5), 40));
+
+    defaultLayer.batchDraw();
+}
+
+function snapAnchor(defaultLayer, moveToX, moveToY){
+    if (isCircle) {
+        circle.position({ x: moveToX, y: moveToY });
+        circle.moveToTop();
+        defaultLayer.add(circle);
+    }
+    if (isSquare) {
+        square.x(moveToX-(square.width()/2)); 
+        square.y(moveToY-(square.height()/2));
+        square.moveToTop();
+        defaultLayer.add(square);
+    }
+    defaultLayer.batchDraw();
 }

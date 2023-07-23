@@ -1,10 +1,10 @@
 import { lineDrawMousedown, lineDrawMousemove } from './lineDraw.js';
-import { selectionMousedown, selectionMousemove } from './selectShape.js';
+import { selectionMousedown, selectionMousemove, selectionHover } from './selectShape.js';
 import { gridDraw } from './gridDraw.js';
 import { handleKeys, handleKeyUp } from './handleKeys.js';
 import { zoomStage } from './zoomStage.js';
 import { panStage } from './panStage.js';
-import { snapDetect, snapIndicatorScale } from './snapSystem.js';
+import { snapDetect, snapAnchorScale } from './snapSystem.js';
 
 var container = document.getElementById("modelspace-container");
 var selectionMode = true, lineMode = false, orthoMode = false;
@@ -72,30 +72,30 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // HANDLE MOUSE EVENTS
-stage.on('mousedown', function(e) {
-    if (e.evt.button === 0) {
+stage.on('mousedown', function(event) {
+    if (event.evt.button === 0) {
         // left mouse click
         if (lineMode) { 
-            lineDrawMousedown(stage, defaultLayer, orthoMode); 
+            lineDrawMousedown(stage, defaultLayer, snapState.state, snapState.point, orthoMode); 
             isDrawing = true;
         }
         if (selectionMode) {
             selectionMousedown(stage, defaultLayer);
         }
     }
-    if (e.evt.button === 1) {
+    if (event.evt.button === 1) {
         // middle mouse click
-        e.evt.preventDefault();
+        event.evt.preventDefault();
         isPanning = true;
         oldPointerDrag = stage.getRelativePointerPosition();
     }
 });
-stage.on('mousemove', function(e) {
+stage.on('mousemove', function(event) {
     var pointer = stage.getRelativePointerPosition();
 
     if (lineMode) { 
         // Store snap state if drawing
-        if (isDrawing){ 
+        if (isDrawing || (defaultLayer.getChildren().length > 0)){ 
             snapState = snapDetect(stage, defaultLayer, pointer, isDrawing, orthoMode);
         } else { 
             snapDetect(stage, defaultLayer, pointer, isDrawing, orthoMode);
@@ -103,10 +103,11 @@ stage.on('mousemove', function(e) {
         lineDrawMousemove(stage, scaleStage, defaultLayer, snapState.state, snapState.point, orthoMode);
     }
     if (selectionMode) { 
-        selectionMousemove(stage);
+        selectionMousemove(pointer);
+        selectionHover(defaultLayer, pointer);
     }
     if (isPanning) { 
-        e.evt.preventDefault();
+        event.evt.preventDefault();
         panStage(stage, gridStage, oldPointerDrag);
     }
 });
@@ -119,7 +120,7 @@ stage.on("wheel", function (e) {
 
     scaleStage = zoomStage(stage, pointer, scaleStage, zoomInc);
     scaleGrid = zoomStage(gridStage, pointer, scaleGrid, zoomInc);
-    snapIndicatorScale(scaleStage);
+    snapAnchorScale(defaultLayer, scaleStage);
 
     updateStageSize(scaleStage);
     defaultLayer.batchDraw();

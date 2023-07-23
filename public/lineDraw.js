@@ -9,12 +9,12 @@ var orthoIndicator = new Konva.Line({
     strokeScaleEnabled: false
 });
 
-export function lineDrawMousedown(stage, defaultLayer, orthoMode) {
+export function lineDrawMousedown(stage, defaultLayer, snapState, snapPoint, orthoMode) {
     var startPoint = stage.getRelativePointerPosition();
     isDrawing = true;
 
     line = new Konva.Line({
-        stroke: 'black',
+        stroke: 'white',
         strokeWidth: 2,
         name: "line"
     });
@@ -26,7 +26,12 @@ export function lineDrawMousedown(stage, defaultLayer, orthoMode) {
         line.points([prevEndpoint.x, prevEndpoint.y, prevEndpoint.x, prevEndpoint.y]);
     }
     if (isSnapped) {
+        // IF SNAPPED, START FROM PREVIOUS
         line.points([prevEndpoint.x, prevEndpoint.y, prevEndpoint.x, prevEndpoint.y]);
+    }
+    if (snapState) {
+        // IF DETECT, START FROM POINT
+        line.points([snapPoint.x, snapPoint.y, snapPoint.x, snapPoint.y]);
     }
 
     defaultLayer.add(line);
@@ -82,6 +87,7 @@ export function lineDrawMousemove(stage, scaleStage, defaultLayer, snapState, sn
         line.points(endPoint);
         defaultLayer.batchDraw();
     }
+    console.log(snapState);
 }
 
 document.addEventListener("keydown", (event) => {

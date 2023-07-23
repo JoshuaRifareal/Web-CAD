@@ -1,9 +1,12 @@
+let selectedObjects = [];
+
 export function handleKeys(event, selectionMode, lineMode, isDrawing, orthoMode) {
     if (event.key === 'Escape') {
       // Deactivate Line tool
       selectionMode = true;
       lineMode = false;
       isDrawing = false;
+      clearSelection();
       console.log("Esc is pressed");
     }
     if (event.key === 'Shift' && isDrawing) {
@@ -19,7 +22,7 @@ export function handleKeys(event, selectionMode, lineMode, isDrawing, orthoMode)
       console.log("L is pressed");
     }
     
-    return { selectionMode, lineMode, isDrawing, orthoMode};
+    return { selectionMode, lineMode, isDrawing, orthoMode };
 }
 
 export function handleKeyUp(event, orthoMode) {
@@ -29,4 +32,15 @@ export function handleKeyUp(event, orthoMode) {
       console.log("ORTHO OFF");
   }
   return { orthoMode };
+}
+
+export function clearSelection() {
+  selectedObjects.forEach(function(object) {
+    object.stroke('white');
+  });
+  selectedObjects = [];
+}
+
+export function addSelectedObject(object) {
+  selectedObjects.push(object);
 }
