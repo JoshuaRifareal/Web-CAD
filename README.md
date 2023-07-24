@@ -12,6 +12,9 @@ A collaborative (soon) online 2D CAD platform using Konva.js
 - Select and deselect
 - Shortcuts
 
+| Attempt | #1    | #2    |
+| :---:   | :---: | :---: |
+| Seconds | 301   | 283   |
 
 ### Interface
 
