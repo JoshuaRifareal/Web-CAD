@@ -12,11 +12,13 @@ A collaborative (soon) online 2D CAD platform using Konva.js
 - Select and deselect
 - Shortcuts
 
-| Implemented                     | To-do                                 	|
-| :-----------------------------	| :--------------------------------------:	|
-| ✅ Zooming and panning         	| ⬜ Changing color, thickness, linetype 	|
-| ✅ Snapping onto nearest point 	| ⬜ Anchor points to adjust length  	    |
-| ✅ Ortho mode (press shift)     | ⬜ Anchor points to adjust length  	  |
+| Implemented                     | To-do                                 	 |
+| :-----------------------------	| :-------------------------------------   |
+| ✅ Zooming and panning         	| ⬜ Changing color, thickness, linetype  |
+| ✅ Snapping onto nearest point 	| ⬜ Anchor points to adjust length  	   |
+| ✅ Ortho mode (press shift)    | ⬜ Action history for undo/redo  	       |
+| ✅ Select and deselect         | ⬜ Copy and Delete lines  	             |
+| ✅ Shortcuts                   | ⬜ More snapping references  	          |
 
 ### Interface
 
