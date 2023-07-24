@@ -2,12 +2,7 @@
 
 A collaborative (soon) online 2D CAD platform using Konva.js
 
-![](https://img.shields.io/github/stars/pandao/editor.md.svg) 
-![](https://img.shields.io/github/forks/pandao/editor.md.svg) 
-![](https://img.shields.io/github/tag/pandao/editor.md.svg) 
-![](https://img.shields.io/github/release/pandao/editor.md.svg) 
-![](https://img.shields.io/github/issues/pandao/editor.md.svg) 
-![](https://img.shields.io/bower/v/editor.md.svg)
+![]https://img.shields.io/badge/online%20collaboration-8A2BE2
 
 ### Features
 
