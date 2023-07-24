@@ -9,12 +9,6 @@ A collaborative (soon) online 2D CAD platform using Konva.js
 
 ### Features
 
-- Zooming and panning
-- Snapping onto nearest point
-- Ortho mode (press shift)
-- Select and deselect
-- Shortcuts
-
 | Implemented                     | To-do                                 	 |
 | :-----------------------------	| :-------------------------------------   |
 | ✅ Zooming and panning         	| ⬜ Changing color, thickness, linetype  |
