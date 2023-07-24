@@ -6,19 +6,13 @@ A collaborative (soon) online 2D CAD platform using Konva.js
 
 ### Features
 
-- Support Standard Markdown / CommonMark and GFM(GitHub Flavored Markdown);
-- Full-featured: Real-time Preview, Image (cross-domain) upload, Preformatted text/Code blocks/Tables insert, Code fold, Search replace, Read only, Themes, Multi-languages, L18n, HTML entities, Code syntax highlighting...;
-- Markdown Extras : Support ToC (Table of Contents), Emoji, Task lists, @Links...;
-- Compatible with all major browsers (IE8+), compatible Zepto.js and iPad;
-- Support identification, interpretation, fliter of the HTML tags;
-- Support TeX (LaTeX expressions, Based on KaTeX), Flowchart and Sequence Diagram of Markdown extended syntax;
-- Support AMD/CMD (Require.js & Sea.js) Module Loader, and Custom/define editor plugins;
+- Zooming and panning
+- Snapping onto nearest point
+- Ortho mode (press shift)
+- Select and deselect
+- Shortcuts
 
 
 ### Interface
 
-Image:
-
-![](https://pandao.github.io/editor.md/examples/images/4.jpg)
-
-> Follow your heart.
+![362482110_7115382861822963_1341625772849490356_n](https://github.com/JoshuaRifareal/Web-CAD/assets/53569901/7796ab50-43ec-4fe9-8f19-2ea89389a71e)
