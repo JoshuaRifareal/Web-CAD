@@ -1,5 +1,5 @@
 <div>
-  <img align="left" width="50" height="50" src="https://github.com/JoshuaRifareal/Web-CAD/assets/53569901/3b240a7e-7d1f-470d-8d5b-ade7fd69a597" >
+  <img align="left" width="40" height="40" src="https://github.com/JoshuaRifareal/Web-CAD/assets/53569901/3b240a7e-7d1f-470d-8d5b-ade7fd69a597" >
   <h1>Web CAD</h1>
 </div>
 
