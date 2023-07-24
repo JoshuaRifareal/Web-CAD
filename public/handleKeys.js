@@ -35,12 +35,11 @@ export function handleKeyUp(event, orthoMode) {
 }
 
 export function clearSelection() {
-  selectedObjects.forEach(function(object) {
-    object.stroke('white');
-  });
   selectedObjects = [];
+  return selectedObjects;
 }
 
 export function addSelectedObject(object) {
   selectedObjects.push(object);
-}
+  return selectedObjects;
+} 

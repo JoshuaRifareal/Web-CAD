@@ -21,6 +21,7 @@ export function lineDrawMousedown(stage, defaultLayer, snapState, snapPoint, ort
     
     if (!orthoMode) {
         line.points([startPoint.x, startPoint.y, startPoint.x, startPoint.y]);
+
     } else {
         // IF ORTHO, LOCK ON TO PREVIOUS
         line.points([prevEndpoint.x, prevEndpoint.y, prevEndpoint.x, prevEndpoint.y]);
@@ -61,6 +62,7 @@ export function lineDrawMousemove(stage, scaleStage, defaultLayer, snapState, sn
                 prevEndpoint = {x:endPoint[2], y:endPoint[3]}
 
                 orthoIndicator.points([endPoint[2], -stage.height()/scaleStage*2, endPoint[2], stage.height()/scaleStage*2]);
+                orthoIndicator.moveToBottom();
                 defaultLayer.add(orthoIndicator);
                 defaultLayer.batchDraw();
             } else {
@@ -69,6 +71,7 @@ export function lineDrawMousemove(stage, scaleStage, defaultLayer, snapState, sn
                 prevEndpoint = {x:endPoint[2], y:endPoint[3]}
 
                 orthoIndicator.points([-stage.width()/scaleStage*2, endPoint[3], stage.width()/scaleStage*2, endPoint[3]]);
+                orthoIndicator.moveToBottom();
                 defaultLayer.add(orthoIndicator);
                 defaultLayer.batchDraw();
             }
@@ -87,7 +90,6 @@ export function lineDrawMousemove(stage, scaleStage, defaultLayer, snapState, sn
         line.points(endPoint);
         defaultLayer.batchDraw();
     }
-    console.log(snapState);
 }
 
 document.addEventListener("keydown", (event) => {

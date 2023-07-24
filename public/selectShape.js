@@ -1,7 +1,9 @@
-import { addSelectedObject } from './handleKeys.js';
+import { clearSelection, addSelectedObject } from './handleKeys.js';
 
 let selectionRectangle;
-let startPos, endPos, hoverPos;
+let startPos;
+var selectedObjects = [];
+var collisionHistory = [];
 
 export function selectionMousedown(stage, defaultLayer) {
   if (!selectionRectangle){
@@ -39,8 +41,6 @@ export function selectionMousemove(pointer) {
 function selectionRelease(defaultLayer) {
   if (!selectionRectangle) return; // No active selection rectangle
 
-  const selectedObjects = [];
-
   // Get the position and size of the selection rectangle
   const rectX = selectionRectangle.x();
   const rectY = selectionRectangle.y();
@@ -54,24 +54,33 @@ function selectionRelease(defaultLayer) {
       const points = object.points();
 
       // Check for collision
-      const collisionDetected = rectangleLineCollision(rectX, rectY, rectWidth, rectHeight, points);
-      console.log('Collision Detected:', collisionDetected);
+      const collisionState = rectangleLineCollision(rectX, rectY, rectWidth, rectHeight, points);
 
-      if (collisionDetected){
-        object.stroke('cyan');
-        addSelectedObject(object);
-      } else {
-        object.stroke('white');
-      }
+      if (collisionState) selectedObjects = addSelectedObject(object);
+      collisionHistory.push(collisionState);
     }
   });
+  
+  if (isCollided(collisionHistory)) {
+    selectedObjects.forEach(function(object) {
+      object.stroke('cyan');
+    });
+  } else {
+    selectedObjects.forEach(function(object) {
+      object.stroke('white');
+    });
+    selectedObjects = clearSelection();
+  }
+
+  console.log("Selected ", selectedObjects.length, (selectedObjects.length>1) ? " lines" : " line");
+  // console.log("History: ", collisionHistory);
+  // console.log("Check: ", isCollided(collisionHistory));
+  collisionHistory = [];
 
   // Hide and remove the selection rectangle
   selectionRectangle.visible(false);
   selectionRectangle.destroy();
   selectionRectangle = null;
-
-  return selectedObjects;
 }
 
 export function selectionHover(defaultLayer, pointer) {
@@ -91,12 +100,6 @@ export function selectionHover(defaultLayer, pointer) {
       }
     }
   });
-}
-
-export function selectionFlush(selectedObjects) {
-  for (i = 0; i <= selectedObjects.length; i++) {
-    selectedObjects[i].stroke('white');
-  }
 }
 
 function pointLineCollision(x, y, linePoints) {
@@ -168,4 +171,8 @@ function rectangleLineCollision(rectX, rectY, rectWidth, rectHeight, linePoints)
   } else {
     return false; // No collision
   }
+}
+
+function isCollided(array) {
+  return array.some(element => element === true);
 }
