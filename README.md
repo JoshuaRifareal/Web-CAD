@@ -2,7 +2,7 @@
 
 A collaborative (soon) online 2D CAD platform using Konva.js
 
-![] (https://img.shields.io/badge/online%20collaboration-8A2BE2)
+![](https://img.shields.io/badge/online%20collaboration-8A2BE2)
 
 ### Features
 
