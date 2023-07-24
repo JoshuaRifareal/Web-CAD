@@ -34,12 +34,16 @@ export function handleKeyUp(event, orthoMode) {
   return { orthoMode };
 }
 
+
+// Handle Select and Deselect
 export function clearSelection() {
   selectedObjects = [];
   return selectedObjects;
 }
-
 export function addSelectedObject(object) {
-  selectedObjects.push(object);
+  // Check if already exists
+  if (!selectedObjects.some((item) => JSON.stringify(item) === JSON.stringify(object))) {
+    selectedObjects.push(object);
+  }
   return selectedObjects;
 } 
