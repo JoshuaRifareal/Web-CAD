@@ -16,6 +16,9 @@ A collaborative (soon) online 2D CAD platform using Konva.js
 | ✅ Ortho mode (press shift)    | ⬜ Action history for undo/redo  	       |
 | ✅ Select and deselect         | ⬜ Copy and Delete lines  	             |
 | ✅ Shortcuts                   | ⬜ More snapping references  	          |
+|                                 | ⬜ Collaboration/User Auth     	      |
+|                                 | ⬜ Coordinate/Measurement system     	|
+|                                 | More ...                              	|
 
 ### Interface
 
