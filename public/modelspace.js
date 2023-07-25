@@ -5,18 +5,22 @@ import { handleKeys, handleKeyUp } from './handleKeys.js';
 import { zoomStage } from './zoomStage.js';
 import { panStage } from './panStage.js';
 import { snapDetect, snapAnchorScale } from './snapSystem.js';
+import { initCanvasColors } from './uiColors.js'
 
 var container = document.getElementById("modelspace-container");
 var selectionMode = true, lineMode = false, orthoMode = false;
 var isPanning = false, isDrawing = false;
 var snapState = {state: false, point: null};
-let zoomStep = 0.1, isZoomin = false, scaleStage = 1, scaleGrid = 1;
+let zoomStep = 0.1, scaleStage = 1, scaleGrid = 1;
 var gridShow = true, gridSize = 50;
 var oldPointerDrag = null;
 
 window.addEventListener('resize', function() {
     updateStageSize();
 });
+
+// INITIALIZE UI COLORS
+initCanvasColors()
 
 // CREATE STAGES
 const stage = new Konva.Stage({

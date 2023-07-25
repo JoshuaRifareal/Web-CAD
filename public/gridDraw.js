@@ -1,4 +1,6 @@
-var gridColor = 'lightgray'; // Color of the grid lines
+import { mode, uiColors } from './uiColors.js';
+
+var gridColor = uiColors(mode).gridColor; // Color of the grid lines
 var gridWidth = 0.2;
 
 export function gridDraw(gridStage, gridLayer, gridSize, scaleStage) {
