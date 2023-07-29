@@ -13,6 +13,7 @@ body {
     width: 100vw;
     height: 100vh;
     cursor: crosshair;
+    color: rgb(125, 83, 255)
 }
 
 #grid-container { z-index: 0; }

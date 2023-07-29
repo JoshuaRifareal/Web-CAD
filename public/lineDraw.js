@@ -1,6 +1,11 @@
+import { mode, uiColors } from './uiColors.js';
+
 let line = null, isLineInit = false;
 var prevEndpoint = {x:null, y:null};
 var isDrawing = false, isSnapped = false;
+
+let lineColor = uiColors(mode).lineColor; 
+
 var orthoIndicator = new Konva.Line({
     stroke: 'green',
     strokeWidth: 1,
@@ -14,8 +19,8 @@ export function lineDrawMousedown(stage, defaultLayer, snapState, snapPoint, ort
     isDrawing = true;
 
     line = new Konva.Line({
-        stroke: 'white',
-        strokeWidth: 2,
+        stroke: lineColor,
+        strokeWidth: 1,
         name: "line"
     });
     

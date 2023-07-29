@@ -11,8 +11,8 @@ var container = document.getElementById("modelspace-container");
 var selectionMode = true, lineMode = false, orthoMode = false;
 var isPanning = false, isDrawing = false;
 var snapState = {state: false, point: null};
-let zoomStep = 0.1, scaleStage = 1, scaleGrid = 1;
-var gridShow = true, gridSize = 50;
+var zoomStep = 0.1, isZoomin = false, scaleStage = 1, scaleGrid = 1;
+var gridShow = true, gridSize = 100;
 var oldPointerDrag = null;
 
 window.addEventListener('resize', function() {
@@ -116,12 +116,13 @@ stage.on('mousemove', function(event) {
     }
 });
 stage.on("wheel", function (e) {
-    // wheel zooming
+    // Wheel zooming
     e.evt.preventDefault();
     var pointer = stage.getPointerPosition();
     var zoomInc = e.evt.deltaY > 0 ? -zoomStep : zoomStep;
     isZoomin = (Math.sign(zoomInc) === 1) ? true : false;
 
+    // Rescale stage, grid, and anchors
     scaleStage = zoomStage(stage, pointer, scaleStage, zoomInc);
     scaleGrid = zoomStage(gridStage, pointer, scaleGrid, zoomInc);
     snapAnchorScale(defaultLayer, scaleStage);

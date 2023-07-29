@@ -39,14 +39,14 @@ export function gridDraw(gridStage, gridLayer, gridSize, scaleStage) {
     y: -(numRows * gridSize),
     points: [0, 0, 0, (numRows * gridSize)*2],
     stroke: 'green',
-    strokeWidth: 1,
+    strokeWidth: gridWidth*3,
     strokeScaleEnabled: false
   }); gridLayer.add(originY);
   var originX = new Konva.Line({
     x: -(numCols * gridSize),
     points: [0, 0, (numCols * gridSize)*2, 0],
     stroke: 'red',
-    strokeWidth: 1,
+    strokeWidth: gridWidth*3,
     strokeScaleEnabled: false
   }); gridLayer.add(originX);
 

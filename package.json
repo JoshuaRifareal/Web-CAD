@@ -2,7 +2,8 @@
   "dependencies": {
     "express": "^4.18.2",
     "konva": "^9.2.0",
-    "socket.io": "^4.7.1"
+    "socket.io": "^4.7.1",
+    "sylvester": "^0.0.21"
   },
   "name": "konva-vanilla",
   "version": "1.0.0",
