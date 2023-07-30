@@ -1,11 +1,15 @@
 <div>
-  <img align="left" width="40" height="40" src="https://github.com/JoshuaRifareal/Web-CAD/assets/53569901/979ac457-70ef-467d-8519-3495ac62331c" >
+  <a href="https://joshuarifareal.github.io/Web-CAD/">
+    <img align="left" width="40" height="40" src="https://github.com/JoshuaRifareal/Web-CAD/assets/53569901/979ac457-70ef-467d-8519-3495ac62331c" >
+  </a>
   <h1>Web CAD</h1>
 </div>
 
 A collaborative (soon) online 2D CAD platform using Konva.js
 
 ![](https://img.shields.io/badge/online%20collaboration-8A2BE2)
+
+🌐 Live Demo: https://joshuarifareal.github.io/Web-CAD/
 
 ### Features
 
