@@ -19,7 +19,7 @@ export function gridDraw(gridStage, gridLayer, gridSize, scaleStage) {
       points: [x, -(numRows * gridSize), x, (numRows * gridSize)],
       stroke: gridColor,
       strokeWidth: gridWidth,
-      strokeScaleEnabled: false
+      strokeScaleEnabled: false,
     }); gridLayer.add(vertDown);
   }
 

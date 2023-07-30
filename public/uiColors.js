@@ -1,4 +1,4 @@
-export let mode = 'night';
+export let mode = 'light';
 
 export function initCanvasColors() {
     document.body.style.backgroundColor = uiColors(mode).bgcolor;
@@ -10,7 +10,7 @@ export function uiColors(mode) {
 
     if (mode === "light") {
         bgcolor = "white";
-        gridColor = "black";
+        gridColor = "gray";
         lineColor = "black";
     } else if (mode === "dark") {
         bgcolor = "rgb(33, 40, 48)";
