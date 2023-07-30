@@ -1,21 +1,37 @@
 {
   "homepage": "https://joshuarifareal.github.io/Web-CAD/",
+  "name": "web-cad",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [],
+  "author": "joshuarifareal",
+  "license": "ISC",
+  "description": "",
   "dependencies": {
     "express": "^4.18.2",
     "konva": "^9.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "socket.io": "^4.7.1",
     "sylvester": "^0.0.21",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4"
   },
-  "name": "konva-vanilla",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "vite": "^4.4.7"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  }
 }

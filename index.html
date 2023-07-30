@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- LOCAL LIBRARIES -->
-    <script src="./node_modules/konva/konva.js" type="text/javascript" defer></script>
-    <script src="./node_modules/socket.io/client-dist/socket.io.js" type="text/javascript" defer></script>
-    <script src="./node_modules/sylvester/lib/node-sylvester/sylvester.js" type="text/javascript" defer></script>
+    <script src="/node_modules/konva/konva.js" type="text/javascript" defer></script>
+    <script src="/node_modules/socket.io/client-dist/socket.io.js" type="text/javascript" defer></script>
+    <script src="/node_modules/sylvester/lib/node-sylvester/sylvester.js" type="text/javascript" defer></script>
     
     <!-- CDN FALLBACK -->
     <script>
@@ -26,12 +26,16 @@
         }
     </script>
 
-    <script src="./public/modelspace.js" type="module"></script>
-    <link rel="stylesheet" href="index.css">
+    <script src="/src/scripts/modelspace.js" type="module"></script>
+    <link rel="stylesheet" href="/src/styles/index.css">
     <title>Web CAD</title>
-    <link rel="icon" href="./images/app-icon.ico">
+    <link rel="icon" href="/app-icon.ico">
 </head>
 <body>
+    <!-- UI Components -->
+    <div id="root"></div>
+
+    <!-- Konva Canvas -->
     <div id="modelspace-container" class="stage-container"></div>
     <div id="grid-container" class="stage-container"></div>
     this is it
