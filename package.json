@@ -1,4 +1,5 @@
 {
+  "homepage": "https://joshuarifareal.github.io/Web-CAD/",
   "dependencies": {
     "express": "^4.18.2",
     "konva": "^9.2.0",
