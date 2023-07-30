@@ -1,4 +1,4 @@
-export let mode = 'light';
+export let mode = 'night';
 
 export function initCanvasColors() {
     document.body.style.backgroundColor = uiColors(mode).bgcolor;

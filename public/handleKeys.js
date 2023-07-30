@@ -1,3 +1,5 @@
+import { removeSnapAnchor } from './snapSystem.js'
+
 let selectedObjects = [];
 
 export function handleKeys(event, selectionMode, lineMode, isDrawing, orthoMode) {
@@ -7,6 +9,7 @@ export function handleKeys(event, selectionMode, lineMode, isDrawing, orthoMode)
       lineMode = false;
       isDrawing = false;
       clearSelection();
+      removeSnapAnchor();
       console.log("Esc is pressed");
     }
     if (event.key === 'Shift' && isDrawing) {

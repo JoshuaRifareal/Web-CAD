@@ -2,8 +2,17 @@ import { clearSelection, addSelectedObject } from './handleKeys.js';
 
 let selectionRectangle;
 let startPos;
-var selectedObjects = [];
-var collisionHistory = [];
+var selectedObjects = [];     // Lines selected
+var collisionHistory = [];    // Booleans
+// Storing original props of unselected lines
+var unselectedObjects = []
+var unselected = {
+  _id: null,
+  stroke: null,
+  strokeWidth: null, 
+};       
+var originalStroke = null;    // Stroke storage
+var isUnselected = false;     // Original switch
 
 export function selectionMousedown(stage, defaultLayer) {
   if (!selectionRectangle){
@@ -56,25 +65,45 @@ function selectionRelease(defaultLayer) {
       // Check for collision
       const collisionState = rectangleLineCollision(rectX, rectY, rectWidth, rectHeight, points);
 
-      if (collisionState) selectedObjects = addSelectedObject(object);
+      if (collisionState) {selectedObjects = addSelectedObject(object)};
       collisionHistory.push(collisionState);
     }
   });
   
   if (isCollided(collisionHistory)) {
+    // Storing original props
     selectedObjects.forEach(function(object) {
+      var unselected = {
+        _id: object._id,
+        stroke: object.stroke(),
+        strokeWidth: object.strokeWidth(),
+      };
+      // Push if unique
+      if (!unselectedObjects.some(obj => obj._id === unselected._id)) {
+        unselectedObjects.push(unselected);
+      }
+
+      // Highlighting selected
       object.stroke('cyan');
     });
-  } else {
-    selectedObjects.forEach(function(object) {
-      object.stroke('white');
-    });
-    selectedObjects = clearSelection();
-  }
 
+  } else {
+    // Restoring original props
+    selectedObjects.forEach(function(object) {
+      unselectedObjects.forEach(function(unselect) {
+        if (unselect._id === object._id) {
+          console.log("Revert to ", unselect.stroke)
+          object.stroke(unselect.stroke);
+          object.strokeWidth(unselect.strokeWidth);
+        }
+      });
+    });
+
+    // Clear selected and unselected objects
+    selectedObjects = clearSelection();
+    unselectedObjects = [];
+  }
   console.log("Selected ", selectedObjects.length, (selectedObjects.length>1) ? " lines" : " line");
-  // console.log("History: ", collisionHistory);
-  // console.log("Check: ", isCollided(collisionHistory));
   collisionHistory = [];
 
   // Hide and remove the selection rectangle
