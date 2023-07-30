@@ -1,0 +1,1 @@
+body{padding:10px;margin:0;overflow:hidden;width:100vw;height:100vh}.stage-container{position:absolute;left:0;top:0;width:100vw;height:100vh;cursor:crosshair;color:#7d53ff}#grid-container{z-index:0}#modelspace-container{z-index:1}
