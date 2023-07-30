@@ -4,17 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <!-- LOCAL LIBRARIES -->
+    <script src="./node_modules/konva/konva.js" type="text/javascript" defer></script>
+    <script src="./node_modules/socket.io/client-dist/socket.io.js" type="text/javascript" defer></script>
+    <script src="./node_modules/sylvester/lib/node-sylvester/sylvester.js" type="text/javascript" defer></script>
+    
     <!-- CDN FALLBACK -->
     <script>
         if (navigator.onLine) {
           loadScript("https://unpkg.com/konva@9.2.0/konva.js");
           loadScript("https://www.unpkg.com/socket.io@4.7.1/client-dist/socket.io.js");
           loadScript("https://cdn.jsdelivr.net/gh/jcoglan/sylvester@0.1.3/sylvester.js");
-        } else {
-          loadScript("./node_modules/konva/konva.js");
-          loadScript("./node_modules/socket.io/client-dist/socket.io.js");
-          loadScript("./node_modules/sylvester/lib/node-sylvester/sylvester.js");
-        }
+        } 
     
         function loadScript(src) {
           var script = document.createElement('script');
@@ -24,7 +25,6 @@
           document.head.appendChild(script);
         }
     </script>
-
 
     <script src="./public/modelspace.js" type="module"></script>
     <link rel="stylesheet" href="index.css">
