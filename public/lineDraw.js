@@ -20,7 +20,7 @@ export function lineDrawMousedown(stage, defaultLayer, snapState, snapPoint, ort
 
     line = new Konva.Line({
         stroke: lineColor,
-        strokeWidth: 1,
+        strokeWidth: 2,
         name: "line"
     });
     
