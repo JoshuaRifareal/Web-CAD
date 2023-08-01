@@ -9,14 +9,16 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/public-sans": "^5.0.5",
+    "@mui/joy": "^5.0.0-alpha.89",
     "express": "^4.18.2",
     "konva": "^9.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "socket.io": "^4.7.1",
-    "sylvester": "^0.0.21",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4"
+    "sylvester": "^0.0.21"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
@@ -34,7 +36,7 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d dist"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   }
 }

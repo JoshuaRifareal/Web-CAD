@@ -26,20 +26,21 @@
         }
     </script>
 
+    <script src="./src/comps/app.jsx" type="module"></script>
     <script src="/src/scripts/modelspace.js" type="module"></script>
-    <script src="./src/comps/main.jsx" type="module"></script>
     <link rel="stylesheet" href="/src/styles/index.css">
     <title>Web CAD</title>
     <link rel="icon" href="/app-icon.ico">
 </head>
 <body>
-    <!-- UI Components -->
-    <div id="root"></div>
 
-    <!-- Konva Canvas -->
-    <div id="modelspace-container" class="stage-container"></div>
-    <div id="grid-container" class="stage-container"></div>
+  <!-- UI Components -->
+  <div id="menubar-container" class="react-interface"></div>
+  <div id="commandbar-container" class="react-interface"></div>
 
-    Test
+  <!-- Konva Canvas -->
+  <div id="modelspace-container" class="stage-container"></div>
+  <div id="grid-container" class="stage-container"></div>
+
 </body>
 </html>

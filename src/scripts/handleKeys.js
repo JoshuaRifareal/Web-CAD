@@ -1,4 +1,5 @@
 import { removeSnapAnchor } from './snapSystem.js'
+import { revertHightlight } from './selectShape.js'
 
 let selectedObjects = [];
 
@@ -10,6 +11,7 @@ export function handleKeys(event, selectionMode, lineMode, isDrawing, orthoMode)
       isDrawing = false;
       clearSelection();
       removeSnapAnchor();
+      revertHightlight();
       console.log("Esc is pressed");
     }
     if (event.key === 'Shift' && isDrawing) {
@@ -20,9 +22,13 @@ export function handleKeys(event, selectionMode, lineMode, isDrawing, orthoMode)
     }
     if (event.key === 'l') {
       // Activate Line tool
-      selectionMode = false;
-      lineMode = true;
-      console.log("L is pressed");
+      // selectionMode = false;
+      // lineMode = true;
+      // console.log("L is pressed");
+    }
+    if (event.key !== 'Escape' && event.key !== 'Shift') {
+      // handleCommandVisibility(true);
+      // console.log("Re-appear");
     }
     
     return { selectionMode, lineMode, isDrawing, orthoMode };

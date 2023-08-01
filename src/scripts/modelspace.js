@@ -7,6 +7,8 @@ import { panStage } from './panStage.js';
 import { snapDetect, snapAnchorScale } from './snapSystem.js';
 import { initCanvasColors } from './uiColors.js'
 
+import { returnCommand } from '../comps/CommandBar.jsx';
+
 var container = document.getElementById("modelspace-container");
 var selectionMode = true, lineMode = false, orthoMode = false;
 var isPanning = false, isDrawing = false;
@@ -65,9 +67,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('keydown', function(event) {
         const modes = handleKeys(event, selectionMode, lineMode, isDrawing, orthoMode);
         selectionMode = modes.selectionMode;
-        lineMode = modes.lineMode;
         isDrawing = modes.isDrawing;
         orthoMode = modes.orthoMode;
+
+        const tool = returnCommand();
+        selectionMode = tool.selectionMode;
+        lineMode = tool.lineMode;
     });
     document.addEventListener('keyup', function(event) {
         const modesRelease = handleKeyUp(event, orthoMode)

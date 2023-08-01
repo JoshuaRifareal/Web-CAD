@@ -1,9 +1,9 @@
 body {
-    padding: 10px;
-    margin: 0;
     overflow: hidden;
+    margin: 0;
     width: 100vw;
     height: 100vh;
+    max-width :100%
 }
 
 .stage-container {
@@ -12,9 +12,22 @@ body {
     top: 0;
     width: 100vw;
     height: 100vh;
+    padding: 0;
+    margin: 0;
     cursor: crosshair;
-    color: rgb(125, 83, 255)
 }
 
+.react-interface {
+    position: relative;
+    background-color: red;
+    display: inline-block;
+}
+
+#commandbar-container {
+    cursor: crosshair;
+}
+
+/* Display order */
 #grid-container { z-index: 0; }
 #modelspace-container { z-index: 1; }
+.react-interface { z-index: 2; }

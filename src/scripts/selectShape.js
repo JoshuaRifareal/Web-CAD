@@ -6,13 +6,6 @@ var selectedObjects = [];     // Lines selected
 var collisionHistory = [];    // Booleans
 // Storing original props of unselected lines
 var unselectedObjects = []
-var unselected = {
-  _id: null,
-  stroke: null,
-  strokeWidth: null, 
-};       
-var originalStroke = null;    // Stroke storage
-var isUnselected = false;     // Original switch
 
 export function selectionMousedown(stage, defaultLayer) {
   if (!selectionRectangle){
@@ -89,15 +82,7 @@ function selectionRelease(defaultLayer) {
 
   } else {
     // Restoring original props
-    selectedObjects.forEach(function(object) {
-      unselectedObjects.forEach(function(unselect) {
-        if (unselect._id === object._id) {
-          console.log("Revert to ", unselect.stroke)
-          object.stroke(unselect.stroke);
-          object.strokeWidth(unselect.strokeWidth);
-        }
-      });
-    });
+    revertHightlight();
 
     // Clear selected and unselected objects
     selectedObjects = clearSelection();
@@ -128,6 +113,17 @@ export function selectionHover(defaultLayer, pointer) {
         }
       }
     }
+  });
+}
+
+export function revertHightlight() {
+  selectedObjects.forEach(function(object) {
+    unselectedObjects.forEach(function(unselect) {
+      if (unselect._id === object._id) {
+        object.stroke(unselect.stroke);
+        object.strokeWidth(unselect.strokeWidth);
+      }
+    });
   });
 }
 
