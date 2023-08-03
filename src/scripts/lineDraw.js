@@ -100,9 +100,14 @@ export function lineDrawMousemove(stage, scaleStage, defaultLayer, snapState, sn
 document.addEventListener("keydown", (event) => {
     if (event.key === 'Escape' && isDrawing) {
         // Cancel active line
-        line.remove();
-        line = null;
-        isLineInit = false;
-        isDrawing = false;
+        lineDrawCancel(false, false);
     }
 });
+
+export function lineDrawCancel(isLineInitParam, isDrawingParam){
+    line.remove();
+    line = null;
+    isLineInit = isLineInitParam;
+    isDrawing = isDrawingParam;
+    console.log("Line cancelled")
+}

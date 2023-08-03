@@ -22,13 +22,9 @@ export function handleKeys(event, selectionMode, lineMode, isDrawing, orthoMode)
     }
     if (event.key === 'l') {
       // Activate Line tool
-      // selectionMode = false;
-      // lineMode = true;
-      // console.log("L is pressed");
-    }
-    if (event.key !== 'Escape' && event.key !== 'Shift') {
-      // handleCommandVisibility(true);
-      // console.log("Re-appear");
+      selectionMode = false;
+      lineMode = true;
+      console.log("L is pressed");
     }
     
     return { selectionMode, lineMode, isDrawing, orthoMode };

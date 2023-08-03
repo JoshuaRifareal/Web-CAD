@@ -3,12 +3,10 @@ import { useState, useEffect, useRef } from 'react';
 import FormControl from '@mui/joy/FormControl';
 import Stack from '@mui/joy/Stack';
 import Autocomplete from '@mui/joy/Autocomplete';
+import { lineDrawCancel } from '../scripts/lineDraw.js'
 
-let isVisibleCommandBar = true;
-let isDynamicCommandBar = true;
 let newValueParam = null;
-let newVisibilityParam = false;
-var selectionMode, lineMode;
+export var selectionModeNew, lineModeNew, isDrawingNew;
 
 export const DynamicCommandBar = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -39,7 +37,7 @@ export const DynamicCommandBar = () => {
         top: position.y,
       }}
     >
-      <CommandBar handleCommandVisibility={setIsDynamicCommandBar} />
+      <CommandBar handleDynamicCommandBar={setIsDynamicCommandBar} />
     </div>
   ) : (
     <CommandBar handleCommandVisibility={setIsDynamicCommandBar} />
@@ -66,7 +64,7 @@ export function CommandBar() {
     }
   }, []);
 
-
+  // Event Handlers
   const handleOnChange = (event, newValue) => {
     const commandExists = commands.some((cmd) => cmd.command === newValue);
     if (commandExists) {
@@ -79,8 +77,8 @@ export function CommandBar() {
     const commandExists = commands.some((cmd) => cmd.command === newValue);
     if (event.key === 'Escape') {
       inputRef.current.blur();
-      isVisibleCommandBar = false;
-      // handleCommandVisibility(isVisibleCommandBar);
+      lineDrawCancel(false, false);
+      hideCommandBar();
     }
     if (event.key === 'Enter' && commandExists) {
       console.log("Enter pressed");
@@ -101,6 +99,7 @@ export function CommandBar() {
           autoHighlight
           autoComplete
           clearOnEscape
+          selectOnFocus
           size="sm"
           variant="solid"
           placeholder="Type anything"
@@ -118,14 +117,15 @@ export function CommandBar() {
         />
       </FormControl>
     </Stack>
-  );
+  )
 }
 
 export function handleCommand(newValueParam){
 
   if (newValueParam === "Line") {
-    selectionMode = false;
-    lineMode = true;
+    selectionModeNew = false;
+    lineModeNew = true;
+    isDrawingNew = true;
     console.log("Command: ", "Line")
   }
   if (newValueParam === "Copy") {
@@ -135,25 +135,31 @@ export function handleCommand(newValueParam){
     console.log("Command: ", "Trim")
   }
 
-  returnCommand();
-  handleCommandVisibility(false);
+  returnCommand(selectionModeNew, lineModeNew, isDrawingNew);
+  hideCommandBar();
 } 
 
-export function returnCommand() {
-  return {selectionMode, lineMode};
+export function returnCommand(selectionModeParam, lineModeParam, isDrawingParam) {
+  selectionModeNew = selectionModeParam;
+  lineModeNew = lineModeParam;
+  isDrawingNew = isDrawingParam;
+  console.log("Selection: ", selectionModeNew)
+  console.log("Line mode: ", lineModeNew)
+  
+  return { selectionModeNew, lineModeNew, isDrawingNew };
 }
 
-export function handleCommandVisibility(state){
-  isVisibleCommandBar = state;
-  console.log("Visibility: ", isVisibleCommandBar)
-  
-  if (isVisibleCommandBar) {
-    commandBarRoot.render(
-      <DynamicCommandBarContainer />
-    )
-    console.log("Show commandbar")
-  } else {
-    commandBarRoot.unmount();
-    console.log("Hide commandbar")
-  }
+export function hideCommandBar() {
+  const commandBarContainer = document.getElementById('commandbar-container');
+  commandBarContainer.style.display = 'none';
+  console.log("Hide commandbar")
+}
+
+export function showCommandBar() {
+  const commandBarContainer = document.getElementById('commandbar-container');
+  const commandBarInput = document.getElementById('commandbar-input');
+  commandBarContainer.style.display = 'block';
+  commandBarInput.focus();
+  commandBarInput.value = "";
+  console.log("Show commandbar")
 }

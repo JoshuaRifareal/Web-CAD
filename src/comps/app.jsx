@@ -8,9 +8,3 @@ ReactDOM.createRoot(document.getElementById('menubar-container')).render(
     <MenuBar />
   </React.StrictMode>,
 );
-
-ReactDOM.createRoot(document.getElementById('commandbar-container')).render(
-  <React.StrictMode>
-    <DynamicCommandBar />
-  </React.StrictMode>,
-);

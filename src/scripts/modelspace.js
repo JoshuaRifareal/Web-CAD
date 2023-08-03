@@ -7,17 +7,15 @@ import { panStage } from './panStage.js';
 import { snapDetect, snapAnchorScale } from './snapSystem.js';
 import { initCanvasColors } from './uiColors.js'
 
-import { returnCommand } from '../comps/CommandBar.jsx';
-
 var container = document.getElementById("modelspace-container");
 var selectionMode = true, lineMode = false, orthoMode = false;
 var isPanning = false, isDrawing = false;
-var snapState = {state: false, point: null};
+var snapState = { state: false, point: null };
 var zoomStep = 0.1, isZoomin = false, scaleStage = 1, scaleGrid = 1;
 var gridShow = true, gridSize = 100;
 var oldPointerDrag = null;
 
-window.addEventListener('resize', function() {
+window.addEventListener('resize', function () {
     updateStageSize();
 });
 
@@ -48,7 +46,7 @@ gridStage.add(gridLayer);
 // UPDATE STAGES
 function updateStageSize(scaleStage) {
     container = document.getElementById("modelspace-container");
-    
+
     stage.width(container.offsetWidth,);
     stage.height(container.offsetHeight);
     stage.batchDraw();
@@ -58,34 +56,33 @@ function updateStageSize(scaleStage) {
     gridStage.batchDraw();
     gridLayer.batchDraw();
 
-    console.log("Stage origin: ", stage.width()/2, ", ", stage.height()/2)
+    console.log("Stage origin: ", stage.width() / 2, ", ", stage.height() / 2)
     if (gridShow) { gridDraw(gridStage, gridLayer, gridSize, scaleStage); }
 } updateStageSize(scaleStage);
 
 // HANDLE KEYPRESS
-document.addEventListener('DOMContentLoaded', function() {
-    document.addEventListener('keydown', function(event) {
+document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('keydown', function (event) {
         const modes = handleKeys(event, selectionMode, lineMode, isDrawing, orthoMode);
-        selectionMode = modes.selectionMode;
-        isDrawing = modes.isDrawing;
         orthoMode = modes.orthoMode;
-
-        const tool = returnCommand();
-        selectionMode = tool.selectionMode;
-        lineMode = tool.lineMode;
+        selectionMode = modes.selectionMode;
+        lineMode = modes.lineMode;
+        isDrawing = modes.isDrawing;
     });
-    document.addEventListener('keyup', function(event) {
+    document.addEventListener('keyup', function (event) {
         const modesRelease = handleKeyUp(event, orthoMode)
         orthoMode = modesRelease.orthoMode;
     });
 });
 
 // HANDLE MOUSE EVENTS
-stage.on('mousedown', function(event) {
+stage.on('mousedown', function (event) {
     if (event.evt.button === 0) {
         // left mouse click
-        if (lineMode) { 
-            lineDrawMousedown(stage, defaultLayer, snapState.state, snapState.point, orthoMode); 
+        // nothing fancy here, basta ihandle ang lineDraw kung line mode,
+        // and handle ang selection kung naka selection mode 
+        if (lineMode) {
+            lineDrawMousedown(stage, defaultLayer, snapState.state, snapState.point, orthoMode);
             isDrawing = true;
         }
         if (selectionMode) {
@@ -94,34 +91,40 @@ stage.on('mousedown', function(event) {
     }
     if (event.evt.button === 1) {
         // middle mouse click
+        // basically, idi-disable lang ang default behavior ng middle click,
+        // para ma-override and maactivate ang panning mode
+        // oldPointerDrag is simply coordinates ng unang middle click   
         event.evt.preventDefault();
         isPanning = true;
         oldPointerDrag = stage.getRelativePointerPosition();
     }
 });
-stage.on('mousemove', function(event) {
+stage.on('mousemove', function (event) {
     var pointer = stage.getRelativePointerPosition();
 
-    if (lineMode) { 
+    if (lineMode) {
         // Store snap state if drawing
-        if (isDrawing || (defaultLayer.getChildren().length > 0)){ 
+        // meaning, ire-read lang ang state ng snapping if
+        // currently nagddraw ng line OR may lines nang nadraw
+        // kung hindi, it means walang snapping
+        if (isDrawing || (defaultLayer.getChildren().length > 0)) {
             snapState = snapDetect(stage, defaultLayer, pointer, isDrawing, orthoMode);
-        } else { 
-            snapDetect(stage, defaultLayer, pointer, isDrawing, orthoMode);
         }
         lineDrawMousemove(stage, scaleStage, defaultLayer, snapState.state, snapState.point, orthoMode);
     }
-    if (selectionMode) { 
+    if (selectionMode) {
         selectionMousemove(pointer);
         selectionHover(defaultLayer, pointer);
     }
-    if (isPanning) { 
+    if (isPanning) {
         event.evt.preventDefault();
         panStage(stage, gridStage, oldPointerDrag);
     }
 });
 stage.on("wheel", function (e) {
     // Wheel zooming
+    // pointer gets the pointer position then zoomInc determines
+    // the direction of increment, wheter positive or negative
     e.evt.preventDefault();
     var pointer = stage.getPointerPosition();
     var zoomInc = e.evt.deltaY > 0 ? -zoomStep : zoomStep;
@@ -141,8 +144,8 @@ stage.on('mouseup', function (e) {
         // left mouse release
     }
     if (e.evt.button === 1) {
-      // middle mouse click release
-      isPanning = false;
-      oldPointerDrag = 0;
+        // middle mouse click release
+        isPanning = false;
+        oldPointerDrag = 0;
     }
 });
