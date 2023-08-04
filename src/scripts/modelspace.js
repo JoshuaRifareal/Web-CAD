@@ -9,15 +9,32 @@ import { initCanvasColors } from './uiColors.js'
 
 var container = document.getElementById("modelspace-container");
 var selectionMode = true, lineMode = false, orthoMode = false;
+var zoomStep = 0.1, isZoomin = false, scaleStage = 1, scaleGrid = 1;
 var isPanning = false, isDrawing = false;
 var snapState = { state: false, point: null };
-var zoomStep = 0.1, isZoomin = false, scaleStage = 1, scaleGrid = 1;
 var gridShow = true, gridSize = 100;
 var oldPointerDrag = null;
 
 window.addEventListener('resize', function () {
-    updateStageSize();
+    updateStageSize(scaleStage);
 });
+
+// EXECUTE COMANDS
+export function executeCommand(command) {
+    if (command === "Line") {
+        selectionMode = false;
+        lineMode = true;
+        console.log("Linemode: ", lineMode)
+    } else if (command === "Escape") {
+        selectionMode = true;
+        lineMode = false;
+        isDrawing = false;
+        console.log("Esc is pressed");
+    } else if (command === "Ortho") {
+        orthoMode = true;
+        console.log("ORTHO ON");
+    }
+}
 
 // INITIALIZE UI COLORS
 initCanvasColors()
@@ -63,11 +80,7 @@ function updateStageSize(scaleStage) {
 // HANDLE KEYPRESS
 document.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', function (event) {
-        const modes = handleKeys(event, selectionMode, lineMode, isDrawing, orthoMode);
-        orthoMode = modes.orthoMode;
-        selectionMode = modes.selectionMode;
-        lineMode = modes.lineMode;
-        isDrawing = modes.isDrawing;
+        const modes = handleKeys(event, isDrawing);
     });
     document.addEventListener('keyup', function (event) {
         const modesRelease = handleKeyUp(event, orthoMode)
@@ -149,3 +162,4 @@ stage.on('mouseup', function (e) {
         oldPointerDrag = 0;
     }
 });
+

@@ -1,165 +1,135 @@
-import ReactDOM from 'react-dom/client'
-import { useState, useEffect, useRef } from 'react';
-import FormControl from '@mui/joy/FormControl';
-import Stack from '@mui/joy/Stack';
-import Autocomplete from '@mui/joy/Autocomplete';
-import { lineDrawCancel } from '../scripts/lineDraw.js'
+import { useState, useEffect, useRef } from "react"
 
-let newValueParam = null;
-export var selectionModeNew, lineModeNew, isDrawingNew;
+export var command;
+const commands = [
+    "Arc",
+    "Line",
+    "Circle",
+    "Copy",
+    "Array",
+]
 
-export const DynamicCommandBar = () => {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isDynamicCommandBar, setIsDynamicCommandBar] = useState(true);
+export const CommandBar = () => {
+    const inputRef = useRef(null);
+    const [value, setValue] = useState("");
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const [isShowOptions, setShowOptions] = useState(false);
+    const [isShowCommandBar, setShowCommandBar] = useState(false);
+    const [highlightedOptionIndex, setHighlightedOptionIndex] = useState(-1);
+    const options = commands.filter( opt => opt.toLowerCase().includes(value.toLowerCase()))
 
-  useEffect(() => {
-    document.addEventListener('mousemove', handleMouseMove);
-    return () => { document.removeEventListener('mousemove', handleMouseMove); };
-  }, []);
+    useEffect(() => {
+        const handleCommandInput = (event) => {
+            if (!isShowCommandBar && event.key !== 'Meta' && event.key !== 'Control' && event.key !== 'Enter') {
+                setShowCommandBar(true);
+            } 
+            if (event.key === 'Escape') {
+                setShowCommandBar(false);
+            }
+        };
 
-  const handleMouseMove = (event) => {
-    setPosition({ x: event.clientX + 10, y: event.clientY - 40 });
-  };
+        document.addEventListener('mousemove', handleMouseMove);
+        document.addEventListener('keydown', handleCommandInput);
 
-  const handleKeyDown = (event) => {
-    if (event.key === 'Escape') {
-      setIsDynamicCommandBar(false);
-    } else {
-      setIsDynamicCommandBar(true);
+        return () => { 
+            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('keydown', handleCommandInput);
+        };
+    }, [isShowCommandBar]);
+
+    useEffect(() => {
+        if (isShowCommandBar && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [isShowCommandBar]);
+
+    const handleMouseMove = (event) => {
+        setPosition({ x: event.clientX + 15, y: event.clientY + 15 });
+    };
+    const handleOnChange = (event) => {
+        setShowOptions(true);
+        setValue(event.target.value);
+        setHighlightedOptionIndex(0)
+
+        if ((event.target.value) === "") {
+            setShowOptions(false)
+        }
     }
-  };
-  
-  return isDynamicCommandBar ? (
-    <div
-      style={{
-        position: 'fixed',
-        left: position.x,
-        top: position.y,
-      }}
-    >
-      <CommandBar handleDynamicCommandBar={setIsDynamicCommandBar} />
-    </div>
-  ) : (
-    <CommandBar handleCommandVisibility={setIsDynamicCommandBar} />
-  );
-  
-}; 
-
-export function CommandBar() {
-  // Command aliases
-  const commands = [
-    { command: 'Line' },
-    { command: 'Copy' },
-    { command: 'Trim' }
-  ];
-
-  // Define refs and states
-  const inputRef = useRef(null);
-  const [value, setValue] = useState('');
-
-  // Set focus upon mount
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
+    const handleOnFocus = (event) => {
+        setValue('');
     }
-  }, []);
-
-  // Event Handlers
-  const handleOnChange = (event, newValue) => {
-    const commandExists = commands.some((cmd) => cmd.command === newValue);
-    if (commandExists) {
-      setValue(newValue);
-      newValueParam = newValue;
-      handleCommand(newValueParam);
+    const handleOnBlur = (event) => {
+        setHighlightedOptionIndex(-1)
+        if (!event.relatedTarget) {
+            event.target.focus();
+        }
     }
-  };
-  const handleKeyDown = (event, newValue) => {
-    const commandExists = commands.some((cmd) => cmd.command === newValue);
-    if (event.key === 'Escape') {
-      inputRef.current.blur();
-      lineDrawCancel(false, false);
-      hideCommandBar();
+    const handleOnSelect = (selected) => {
+        setShowOptions(false);
+        setShowCommandBar(false);
+        setValue(selected);
+
+        command = selected;
+        console.log("Command: ", selected)
     }
-    if (event.key === 'Enter' && commandExists) {
-      console.log("Enter pressed");
-    }
-  };
-  const handleOnBlur = (event) => {
-    if (!event.relatedTarget) {
-      event.target.focus();
-    }
-  }
+    const handleKeyDown = (event) => {
+        
+        if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          setHighlightedOptionIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+        } else if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          setHighlightedOptionIndex((prevIndex) =>
+            Math.min(prevIndex + 1, options.length - 1)
+          );
+        } else if (event.key === 'Enter') {
+          event.preventDefault();
+          if (highlightedOptionIndex !== -1) {
+            handleOnSelect(options[highlightedOptionIndex]);
+          }
+        } else if (event.key === 'Escape') {
+            setShowOptions(false);
+            setShowCommandBar(false);
+        }
+    };
 
-  return (
-    <Stack spacing={2} sx={{ width: 150 }}>
-      <FormControl id="commandbar-input">
-        <Autocomplete
-          freeSolo
-          autoFocus
-          autoHighlight
-          autoComplete
-          clearOnEscape
-          selectOnFocus
-          size="sm"
-          variant="solid"
-          placeholder="Type anything"
-          value={value}
-          options={commands.map((option) => option.command)}
-          ref={inputRef}
-          onBlur={handleOnBlur}
-          onKeyDown={handleKeyDown}
-          onChange={handleOnChange}
-          sx={{
-            '--Input-focusedThickness': '0',
-            '--Input-minHeight': '25px',
-            '--Input-radius': '10px',
-          }}
-        />
-      </FormControl>
-    </Stack>
-  )
-}
 
-export function handleCommand(newValueParam){
-
-  if (newValueParam === "Line") {
-    selectionModeNew = false;
-    lineModeNew = true;
-    isDrawingNew = true;
-    console.log("Command: ", "Line")
-  }
-  if (newValueParam === "Copy") {
-    console.log("Command: ", "Copy")
-  }
-  if (newValueParam === "Trim") {
-    console.log("Command: ", "Trim")
-  }
-
-  returnCommand(selectionModeNew, lineModeNew, isDrawingNew);
-  hideCommandBar();
-} 
-
-export function returnCommand(selectionModeParam, lineModeParam, isDrawingParam) {
-  selectionModeNew = selectionModeParam;
-  lineModeNew = lineModeParam;
-  isDrawingNew = isDrawingParam;
-  console.log("Selection: ", selectionModeNew)
-  console.log("Line mode: ", lineModeNew)
-  
-  return { selectionModeNew, lineModeNew, isDrawingNew };
-}
-
-export function hideCommandBar() {
-  const commandBarContainer = document.getElementById('commandbar-container');
-  commandBarContainer.style.display = 'none';
-  console.log("Hide commandbar")
-}
-
-export function showCommandBar() {
-  const commandBarContainer = document.getElementById('commandbar-container');
-  const commandBarInput = document.getElementById('commandbar-input');
-  commandBarContainer.style.display = 'block';
-  commandBarInput.focus();
-  commandBarInput.value = "";
-  console.log("Show commandbar")
+    return (
+        <div className="commandbar"
+            style={{
+                position: 'fixed',
+                left: position.x,
+                top: position.y,
+                visibility: isShowCommandBar ? "visible" : "hidden"
+            }}
+        >
+            <input id="commandbar-input"
+                autoFocus
+                autoComplete="off"
+                type="text"
+                placeholder="Search"
+                onChange={handleOnChange}
+                onFocus={handleOnFocus}
+                onBlur={handleOnBlur}
+                onKeyDown={handleKeyDown}
+                value={value}
+                ref={inputRef}
+            />
+            {isShowOptions && (
+                <ul className="options-list">
+                    {options.map((option, index) => (
+                        <li 
+                            onClick={() => handleOnSelect(option)}
+                            key={option}
+                            style={{
+                                backgroundColor: index === highlightedOptionIndex ? 'rgba(0, 0, 0, 0.2)' : 'transparent',
+                            }}
+                        >
+                            {option}
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
+    )
 }
