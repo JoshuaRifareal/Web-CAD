@@ -7,7 +7,9 @@ const commands = [
     "Circle",
     "Copy",
     "Array",
-]
+    "Offset",
+    "Dimension",
+]; commands.sort()
 
 export const CommandBar = () => {
     const inputRef = useRef(null);
@@ -84,8 +86,9 @@ export const CommandBar = () => {
           );
         } else if (event.key === 'Enter') {
           event.preventDefault();
-          if (highlightedOptionIndex !== -1) {
+          if ((highlightedOptionIndex !== -1) && (options[highlightedOptionIndex] !== undefined)) {
             handleOnSelect(options[highlightedOptionIndex]);
+            console.log(options[highlightedOptionIndex])
           }
         } else if (event.key === 'Escape') {
             setShowOptions(false);
@@ -93,7 +96,7 @@ export const CommandBar = () => {
         }
     };
 
-
+    // RETURN COMPONENT
     return (
         <div className="commandbar"
             style={{
@@ -122,7 +125,8 @@ export const CommandBar = () => {
                             onClick={() => handleOnSelect(option)}
                             key={option}
                             style={{
-                                backgroundColor: index === highlightedOptionIndex ? 'rgba(0, 0, 0, 0.2)' : 'transparent',
+                                backgroundColor: index === highlightedOptionIndex ? 'mediumpurple ' : 'transparent',
+                                color: index === highlightedOptionIndex ? 'white ' : 'black',
                             }}
                         >
                             {option}

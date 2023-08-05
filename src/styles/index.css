@@ -4,6 +4,7 @@ body {
   width: 100vw;
   height: 100vh;
   max-width: 100%;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 .stage-container {
@@ -22,17 +23,103 @@ body {
   display: inline-block;
 }
 
+#menubar-container {
+  display: block;
+  margin: 15px;
+}
+#menubar-container .menubar-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+#menubar-container .menubar-wrapper .titlebar button, #menubar-container .menubar-wrapper .toolbar button, #menubar-container .menubar-wrapper .presencebar button {
+  color: gray;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background: white;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  padding: 10px;
+}
+#menubar-container .menubar-wrapper .titlebar button span, #menubar-container .menubar-wrapper .toolbar button span, #menubar-container .menubar-wrapper .presencebar button span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+#menubar-container .menubar-wrapper .titlebar button span img, #menubar-container .menubar-wrapper .toolbar button span img, #menubar-container .menubar-wrapper .presencebar button span img {
+  height: 16px;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+#menubar-container .menubar-wrapper .titlebar button span svg, #menubar-container .menubar-wrapper .toolbar button span svg, #menubar-container .menubar-wrapper .presencebar button span svg {
+  height: 16px;
+  width: 18px;
+}
+#menubar-container .menubar-wrapper .titlebar button:hover, #menubar-container .menubar-wrapper .toolbar button:hover, #menubar-container .menubar-wrapper .presencebar button:hover {
+  color: white;
+  background: mediumpurple;
+}
+#menubar-container .menubar-wrapper .titlebar .toolbar-button, #menubar-container .menubar-wrapper .toolbar .toolbar-button, #menubar-container .menubar-wrapper .presencebar .toolbar-button {
+  border-radius: 4px;
+  box-shadow: none;
+  border: none;
+  padding: 4px;
+}
+#menubar-container .menubar-wrapper .titlebar .toolbar-button span svg path, #menubar-container .menubar-wrapper .toolbar .toolbar-button span svg path, #menubar-container .menubar-wrapper .presencebar .toolbar-button span svg path {
+  stroke: rgb(77, 77, 77);
+}
+#menubar-container .menubar-wrapper .titlebar .toolbar-button:hover span svg path, #menubar-container .menubar-wrapper .toolbar .toolbar-button:hover span svg path, #menubar-container .menubar-wrapper .presencebar .toolbar-button:hover span svg path {
+  stroke: white;
+}
+#menubar-container .menubar-wrapper .titlebar .presence-button, #menubar-container .menubar-wrapper .toolbar .presence-button, #menubar-container .menubar-wrapper .presencebar .presence-button {
+  outline: solid 4px lightskyblue;
+  outline-offset: -4px;
+  border-radius: 50%;
+  background-image: url("/public/avatar.png");
+  background-size: cover;
+  width: 38px;
+}
+#menubar-container .menubar-wrapper .toolbar-group {
+  background: white;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+#menubar-container .menubar-wrapper .bar {
+  flex: 1;
+  display: flex;
+}
+#menubar-container .menubar-wrapper .bar:first-child {
+  justify-content: left;
+}
+#menubar-container .menubar-wrapper .bar:nth-child(2) {
+  justify-content: center;
+}
+#menubar-container .menubar-wrapper .bar:last-child {
+  justify-content: right;
+}
+
 #commandbar-container {
   display: block;
+  font-size: 10pt;
 }
 #commandbar-container .commandbar {
   overflow: hidden;
   max-width: 120px;
   border-radius: 10px;
-  border: 1px solid black;
+  border: 1px solid rgb(243, 243, 243);
   background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 #commandbar-container .commandbar input {
+  line-height: 16pt;
+  font-size: 10pt;
   color: black;
   padding: 0 6px;
   background: none;
@@ -46,10 +133,10 @@ body {
   margin: 0;
   padding: 0;
   list-style: none;
-  background-color: rgb(212, 212, 212);
+  background-color: rgb(253, 253, 253);
 }
 #commandbar-container .commandbar ul li {
-  padding: 0 6px;
+  padding: 2px 6px;
 }
 
 /* Display order */

@@ -1,5 +1,7 @@
+import { mode, uiColors } from './uiColors.js';
 import { clearSelection, addSelectedObject } from './handleKeys.js';
 
+var highlightColor = uiColors(mode).highlightColor; 
 let selectionRectangle;
 let startPos;
 var selectedObjects = [];     // Lines selected
@@ -77,7 +79,7 @@ function selectionRelease(defaultLayer) {
       }
 
       // Highlighting selected
-      object.stroke('cyan');
+      object.stroke(highlightColor);
     });
 
   } else {

@@ -3,7 +3,8 @@ body {
     margin: 0;
     width: 100vw;
     height: 100vh;
-    max-width: 100%
+    max-width: 100%;
+    font-family: Helvetica, Arial, sans-serif;
 }
 
 .stage-container {
@@ -22,17 +23,117 @@ body {
     display: inline-block;
 }
 
+#menubar-container {
+    display: block;
+    margin: 15px;
+
+    .menubar-wrapper {
+        display: flex;
+        justify-content:  space-between;
+
+        .titlebar, .toolbar, .presencebar {
+
+            button {
+                color: gray;
+                appearance: none;
+                background: white;
+                border: 1px solid rgba(27, 31, 35, .15);
+                border-radius: 10px;
+                box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+                padding: 10px;
+    
+                span {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 5px;
+    
+                    img {
+                        height: 16px;
+                        object-fit: contain;
+                    }
+
+                    svg {
+                        height: 16px;
+                        width: 18px;
+                    }
+                }
+    
+                &:hover {
+                    color: white;
+                    background: mediumpurple;
+                }
+            }
+            .toolbar-button {
+                border-radius: 4px;
+                box-shadow: none;
+                border: none;
+                padding: 4px;
+
+                span {
+                    svg {
+                        path {
+                            stroke: rgb(77, 77, 77);
+                        }
+                    }
+                }
+                &:hover {
+                    span {
+                        svg {
+                            path {
+                                stroke: white
+                            }
+                        }
+                    }
+                }
+            }
+            .presence-button {
+                outline: solid 4px lightskyblue;
+                outline-offset: -4px;
+                border-radius: 50%;
+                background-image: url("/public/avatar.png");
+                background-size: cover;
+                width: 38px;
+            }
+        }
+        
+        .toolbar-group {
+            background: white;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            border-radius: 10px;
+            border: 1px solid rgba(27, 31, 35, .15);
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        }
+
+        .bar {
+            flex: 1;
+            display: flex;
+
+            &:first-child { justify-content: left; }
+            &:nth-child(2) { justify-content: center; }
+            &:last-child { justify-content: right; }
+        }
+    }
+}
+
 #commandbar-container {
     display: block;
+    font-size: 10pt;
 
     .commandbar {
         overflow: hidden;
         max-width: 120px;
         border-radius: 10px;
-        border: 1px solid black;
+        border: 1px solid rgb(243, 243, 243);
         background-color: white;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 
         input {
+            line-height: 16pt;
+            font-size: 10pt;
             color: black;
             padding: 0 6px;
             background: none;
@@ -47,24 +148,15 @@ body {
             margin: 0;
             padding: 0;
             list-style: none;
-            background-color: rgb(212, 212, 212);
-
+            background-color: rgb(253, 253, 253);
             li {
-                padding: 0 6px;
+                padding: 2px 6px;
             }
         }
     }
 }
 
 /* Display order */
-#grid-container {
-    z-index: 0;
-}
-
-#modelspace-container {
-    z-index: 1;
-}
-
-.react-interface {
-    z-index: 2;
-}
+#grid-container { z-index: 0; }
+#modelspace-container { z-index: 1; }
+.react-interface { z-index: 2; }

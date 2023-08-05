@@ -12,11 +12,11 @@ var selectionMode = true, lineMode = false, orthoMode = false;
 var zoomStep = 0.1, isZoomin = false, scaleStage = 1, scaleGrid = 1;
 var isPanning = false, isDrawing = false;
 var snapState = { state: false, point: null };
-var gridShow = true, gridSize = 100;
+var gridShow = true, gridSize = 50;
 var oldPointerDrag = null;
 
 window.addEventListener('resize', function () {
-    updateStageSize(scaleStage);
+    updateStageSize(scaleStage, gridSize);
 });
 
 // EXECUTE COMANDS
@@ -53,6 +53,7 @@ const gridStage = new Konva.Stage({
     container: 'grid-container'
 });
 
+
 // CREATE LAYERS
 const defaultLayer = new Konva.Layer();
 const gridLayer = new Konva.Layer();
@@ -61,7 +62,7 @@ stage.add(defaultLayer);
 gridStage.add(gridLayer);
 
 // UPDATE STAGES
-function updateStageSize(scaleStage) {
+function updateStageSize(scaleStage, gridSize) {
     container = document.getElementById("modelspace-container");
 
     stage.width(container.offsetWidth,);
@@ -75,7 +76,7 @@ function updateStageSize(scaleStage) {
 
     console.log("Stage origin: ", stage.width() / 2, ", ", stage.height() / 2)
     if (gridShow) { gridDraw(gridStage, gridLayer, gridSize, scaleStage); }
-} updateStageSize(scaleStage);
+} updateStageSize(scaleStage, gridSize);
 
 // HANDLE KEYPRESS
 document.addEventListener('DOMContentLoaded', function () {
@@ -148,7 +149,9 @@ stage.on("wheel", function (e) {
     scaleGrid = zoomStage(gridStage, pointer, scaleGrid, zoomInc);
     snapAnchorScale(defaultLayer, scaleStage);
 
-    updateStageSize(scaleStage);
+    gridSize = (scaleStage <= 0.5)? 100 : 50;
+
+    updateStageSize(scaleStage, gridSize);
     defaultLayer.batchDraw();
     gridLayer.batchDraw();
 });
