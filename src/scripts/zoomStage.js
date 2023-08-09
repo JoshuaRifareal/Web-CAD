@@ -11,7 +11,7 @@ export function zoomStage(stage, zoomPoint, zoomBefore, increment) {
 
   // compute new scale
   var zoomAfter = zoomBefore + increment;
-  zoomAfter = Math.max(0.2, Math.min(10, zoomAfter))
+  zoomAfter = Math.max(0.1, Math.min(5, zoomAfter))
 
   // apply new zoom to stage
   stage.scale({ x: zoomAfter, y: zoomAfter });

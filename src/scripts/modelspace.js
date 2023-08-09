@@ -1,3 +1,4 @@
+// IMPORT FUNCTIONS
 import { lineDrawMousedown, lineDrawMousemove } from './lineDraw.js';
 import { selectionMousedown, selectionMousemove, selectionHover } from './selectShape.js';
 import { gridDraw } from './gridDraw.js';
@@ -7,13 +8,14 @@ import { panStage } from './panStage.js';
 import { snapDetect, snapAnchorScale } from './snapSystem.js';
 import { initCanvasColors } from './uiColors.js'
 
-var container = document.getElementById("modelspace-container");
-var selectionMode = true, lineMode = false, orthoMode = false;
-var zoomStep = 0.1, isZoomin = false, scaleStage = 1, scaleGrid = 1;
-var isPanning = false, isDrawing = false;
-var snapState = { state: false, point: null };
-var gridShow = true, gridSize = 50;
-var oldPointerDrag = null;
+// EXPORT GLOBAL OBJECTS
+export var container = document.getElementById("modelspace-container");
+export var selectionMode = true, lineMode = false, orthoMode = false, snapMode = true;
+export var zoomStep = 0.1, isZoomin = false, scaleStage = 1, scaleGrid = 1;
+export var isPanning = false, isDrawing = false;
+export var snapState = { state: false, point: null };
+export var gridShow = true, gridSize = 50;
+export var oldPointerDrag = null;
 
 window.addEventListener('resize', function () {
     updateStageSize(scaleStage, gridSize);
@@ -33,6 +35,9 @@ export function executeCommand(command) {
     } else if (command === "Ortho") {
         orthoMode = true;
         console.log("ORTHO ON");
+    } else if (command === "Snap") {
+        snapMode = false;
+        console.log("SNAP OFF");
     }
 }
 
@@ -84,8 +89,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const modes = handleKeys(event, isDrawing);
     });
     document.addEventListener('keyup', function (event) {
-        const modesRelease = handleKeyUp(event, orthoMode)
+        const modesRelease = handleKeyUp(event, orthoMode, snapMode)
         orthoMode = modesRelease.orthoMode;
+        snapMode = modesRelease.snapMode;
     });
 });
 
@@ -121,8 +127,8 @@ stage.on('mousemove', function (event) {
         // meaning, ire-read lang ang state ng snapping if
         // currently nagddraw ng line OR may lines nang nadraw
         // kung hindi, it means walang snapping
-        if (isDrawing || (defaultLayer.getChildren().length > 0)) {
-            snapState = snapDetect(stage, defaultLayer, pointer, isDrawing, orthoMode);
+        if ((isDrawing || (defaultLayer.getChildren().length > 0)) && snapMode) {
+            snapState = snapDetect(stage, defaultLayer, pointer, orthoMode, snapMode);
         }
         lineDrawMousemove(stage, scaleStage, defaultLayer, snapState.state, snapState.point, orthoMode);
     }
@@ -135,13 +141,13 @@ stage.on('mousemove', function (event) {
         panStage(stage, gridStage, oldPointerDrag);
     }
 });
-stage.on("wheel", function (e) {
+stage.on("wheel", function (event) {
     // Wheel zooming
     // pointer gets the pointer position then zoomInc determines
     // the direction of increment, wheter positive or negative
-    e.evt.preventDefault();
+    event.evt.preventDefault();
     var pointer = stage.getPointerPosition();
-    var zoomInc = e.evt.deltaY > 0 ? -zoomStep : zoomStep;
+    var zoomInc = event.evt.deltaY > 0 ? -zoomStep : zoomStep;
     isZoomin = (Math.sign(zoomInc) === 1) ? true : false;
 
     // Rescale stage, grid, and anchors
@@ -150,16 +156,17 @@ stage.on("wheel", function (e) {
     snapAnchorScale(defaultLayer, scaleStage);
 
     gridSize = (scaleStage <= 0.5)? 100 : 50;
+    gridSize = (scaleStage <= 0.25)? 100 : 50;
 
     updateStageSize(scaleStage, gridSize);
     defaultLayer.batchDraw();
     gridLayer.batchDraw();
 });
-stage.on('mouseup', function (e) {
-    if (e.evt.button === 0) {
+stage.on('mouseup', function (event) {
+    if (event.evt.button === 0) {
         // left mouse release
     }
-    if (e.evt.button === 1) {
+    if (event.evt.button === 1) {
         // middle mouse click release
         isPanning = false;
         oldPointerDrag = 0;

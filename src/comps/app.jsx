@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import MenuBar from './MenuBar.jsx'
-import { CommandBar } from './CommandBar.jsx';
+import TitleBar from './TitleBar.jsx';
+import CommandBar from './CommandBar.jsx';
+import ToolBar from './ToolBar.jsx';
 
-ReactDOM.createRoot(document.getElementById('menubar-container')).render(
+ReactDOM.createRoot(document.getElementById('titlebar-container')).render(
   <React.StrictMode>
-    <MenuBar />
+    <TitleBar />
   </React.StrictMode>,
 );
 
@@ -14,3 +15,10 @@ ReactDOM.createRoot(document.getElementById('commandbar-container')).render(
     <CommandBar />
   </React.StrictMode>,
 );
+
+ReactDOM.createRoot(document.getElementById('toolbar-container')).render(
+  <React.StrictMode>
+    <ToolBar />
+  </React.StrictMode>,
+);
+

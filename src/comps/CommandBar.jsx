@@ -11,7 +11,7 @@ const commands = [
     "Dimension",
 ]; commands.sort()
 
-export const CommandBar = () => {
+export default function CommandBar() {
     const inputRef = useRef(null);
     const [value, setValue] = useState("");
     const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -63,7 +63,7 @@ export const CommandBar = () => {
     const handleOnBlur = (event) => {
         setHighlightedOptionIndex(-1)
         if (!event.relatedTarget) {
-            event.target.focus();
+            // event.target.focus();
         }
     }
     const handleOnSelect = (selected) => {
@@ -110,7 +110,7 @@ export const CommandBar = () => {
                 autoFocus
                 autoComplete="off"
                 type="text"
-                placeholder="Search"
+                placeholder="Type a command"
                 onChange={handleOnChange}
                 onFocus={handleOnFocus}
                 onBlur={handleOnBlur}
@@ -136,4 +136,21 @@ export const CommandBar = () => {
             )}
         </div>
     )
+}
+
+export function ActivateTool(command) {
+    var arrowTool = document.getElementById("arrow-tool");
+    var lineTool = document.getElementById("line-tool");
+    var rectTool = document.getElementById("rect-tool");
+
+    if (command === "Line") {
+        lineTool.classList.add("active-tool");
+        arrowTool.classList.remove("active-tool");
+        rectTool.classList.remove("active-tool");
+    } else if (command === "Escape") {
+        
+       
+    } else if (command === "Ortho") {
+        
+    }
 }

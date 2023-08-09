@@ -1,3 +1,18 @@
+:root {
+  --border-radius: 10px;
+  --textsize-tall: 18pt;
+  --textsize-reg: 12pt;
+  --textsize-med: 10pt;
+  --textsize-small: 8pt;
+  --fg-color: black;
+  --primary-bg: white;
+  --secondary-bg: rgb(253, 253, 253);
+  --primary-highlight: mediumpurple;
+  --secondary-highlight: rgb(205, 194, 228);
+  --border-line: 1px solid rgb(221, 221, 221);
+  --box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
 body {
   overflow: hidden;
   margin: 0;
@@ -23,86 +38,78 @@ body {
   display: inline-block;
 }
 
-#menubar-container {
-  display: block;
-  margin: 15px;
-}
-#menubar-container .menubar-wrapper {
-  display: flex;
-  justify-content: space-between;
-}
-#menubar-container .menubar-wrapper .titlebar button, #menubar-container .menubar-wrapper .toolbar button, #menubar-container .menubar-wrapper .presencebar button {
-  color: gray;
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  background: white;
-  border: 1px solid rgba(27, 31, 35, 0.15);
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+#titlebar-container {
   padding: 10px;
 }
-#menubar-container .menubar-wrapper .titlebar button span, #menubar-container .menubar-wrapper .toolbar button span, #menubar-container .menubar-wrapper .presencebar button span {
+#titlebar-container > div {
+  padding: 5px;
+  border: var(--border-line);
+  background-color: var(--primary-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+#titlebar-container > div > div {
   display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 5px;
 }
-#menubar-container .menubar-wrapper .titlebar button span img, #menubar-container .menubar-wrapper .toolbar button span img, #menubar-container .menubar-wrapper .presencebar button span img {
-  height: 16px;
-  -o-object-fit: contain;
-     object-fit: contain;
-}
-#menubar-container .menubar-wrapper .titlebar button span svg, #menubar-container .menubar-wrapper .toolbar button span svg, #menubar-container .menubar-wrapper .presencebar button span svg {
-  height: 16px;
-  width: 18px;
-}
-#menubar-container .menubar-wrapper .titlebar button:hover, #menubar-container .menubar-wrapper .toolbar button:hover, #menubar-container .menubar-wrapper .presencebar button:hover {
-  color: white;
-  background: mediumpurple;
-}
-#menubar-container .menubar-wrapper .titlebar .toolbar-button, #menubar-container .menubar-wrapper .toolbar .toolbar-button, #menubar-container .menubar-wrapper .presencebar .toolbar-button {
-  border-radius: 4px;
-  box-shadow: none;
+#titlebar-container > div > div button {
+  height: 36px;
   border: none;
-  padding: 4px;
+  background-color: var(--primary-bg);
 }
-#menubar-container .menubar-wrapper .titlebar .toolbar-button span svg path, #menubar-container .menubar-wrapper .toolbar .toolbar-button span svg path, #menubar-container .menubar-wrapper .presencebar .toolbar-button span svg path {
-  stroke: rgb(77, 77, 77);
+#titlebar-container > div > div button img, #titlebar-container > div > div button svg {
+  height: 80%;
+  padding: 0;
+  margin: 0;
 }
-#menubar-container .menubar-wrapper .titlebar .toolbar-button:hover span svg path, #menubar-container .menubar-wrapper .toolbar .toolbar-button:hover span svg path, #menubar-container .menubar-wrapper .presencebar .toolbar-button:hover span svg path {
-  stroke: white;
+#titlebar-container > div > div span {
+  font-size: var(--textsize-med);
+  margin: 0;
+  padding: 0;
 }
-#menubar-container .menubar-wrapper .titlebar .presence-button, #menubar-container .menubar-wrapper .toolbar .presence-button, #menubar-container .menubar-wrapper .presencebar .presence-button {
-  outline: solid 4px lightskyblue;
-  outline-offset: -4px;
-  border-radius: 50%;
-  background-image: url("/public/avatar.png");
-  background-size: cover;
-  width: 38px;
+#titlebar-container > div > div input {
+  font-size: var(--textsize-reg);
+  color: black;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  max-width: 140px;
 }
-#menubar-container .menubar-wrapper .toolbar-group {
-  background: white;
-  padding: 6px;
+#titlebar-container > div > div .select-dir {
+  font-size: var(--textsize-med);
+  background-color: var(--primary-bg);
+  position: absolute;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  color: gray;
+}
+#titlebar-container > div > div .select-dir:hover {
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  background-color: var(--secondary-bg);
+}
+#titlebar-container > div > div .select-dir:hover ul {
+  display: block;
+}
+#titlebar-container > div > div .select-dir ul {
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
   overflow: hidden;
-  border-radius: 10px;
-  border: 1px solid rgba(27, 31, 35, 0.15);
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  color: black;
+  display: none;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-#menubar-container .menubar-wrapper .bar {
-  flex: 1;
-  display: flex;
+#titlebar-container > div > div .select-dir ul li {
+  padding: 0 10px;
 }
-#menubar-container .menubar-wrapper .bar:first-child {
-  justify-content: left;
-}
-#menubar-container .menubar-wrapper .bar:nth-child(2) {
-  justify-content: center;
-}
-#menubar-container .menubar-wrapper .bar:last-child {
-  justify-content: right;
+#titlebar-container > div > div .select-dir ul li:hover {
+  background-color: var(--primary-highlight);
 }
 
 #commandbar-container {
@@ -111,11 +118,11 @@ body {
 }
 #commandbar-container .commandbar {
   overflow: hidden;
-  max-width: 120px;
-  border-radius: 10px;
-  border: 1px solid rgb(243, 243, 243);
-  background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  max-width: 140px;
+  border-radius: var(--border-radius);
+  border: var(--border-line);
+  background-color: var(--primary-bg);
+  box-shadow: var(--box-shadow);
 }
 #commandbar-container .commandbar input {
   line-height: 16pt;
@@ -133,10 +140,52 @@ body {
   margin: 0;
   padding: 0;
   list-style: none;
-  background-color: rgb(253, 253, 253);
+  background-color: var(--secondary-bg);
 }
 #commandbar-container .commandbar ul li {
   padding: 2px 6px;
+}
+
+#toolbar-container {
+  position: absolute;
+  padding: 10px;
+  bottom: 0px;
+  width: 100vw;
+  background-color: transparent;
+}
+#toolbar-container div {
+  display: flex;
+  justify-content: space-around;
+  overflow: hidden;
+}
+#toolbar-container div > div {
+  background-color: var(--primary-bg);
+  box-shadow: var(--box-shadow);
+  border-radius: var(--border-radius);
+  border: var(--border-line);
+  padding: 5px;
+  display: flex;
+  gap: 5px;
+}
+#toolbar-container div > div button {
+  display: inline-block;
+  padding: 8px;
+  border: none;
+  border-radius: var(--border-radius);
+  background-color: var(--primary-bg);
+}
+#toolbar-container div > div button:hover {
+  background-color: var(--secondary-highlight);
+}
+#toolbar-container div > div button svg {
+  height: var(--textsize-reg);
+  width: height;
+}
+#toolbar-container div > div button.active-tool {
+  background-color: var(--primary-highlight);
+}
+#toolbar-container div > div button.active-tool svg g {
+  stroke: white;
 }
 
 /* Display order */

@@ -1,6 +1,6 @@
 import { removeSnapAnchor } from './snapSystem.js'
 import { revertHightlight } from './selectShape.js'
-import { command } from '../comps/CommandBar.jsx';
+import { command, ActivateTool } from '../comps/CommandBar.jsx';
 import { executeCommand } from './modelspace.js';
 
 let selectedObjects = [];
@@ -18,7 +18,11 @@ export function handleKeys(event, isDrawing) {
   } else if (event.key === 'Enter') {
     // Enter command
     executeCommand(command);
+    ActivateTool(command);
     console.log("Enter is pressed")
+  } else if (event.key === 'Control') {
+    // Enter command
+    executeCommand("Snap");
   } else {
     return;
   }
@@ -26,13 +30,17 @@ export function handleKeys(event, isDrawing) {
   return { isDrawing }
 }
 
-export function handleKeyUp(event, orthoMode) {
+export function handleKeyUp(event, orthoMode, snapMode) {
   if (event.key === 'Shift') {
-      // Ortho mode OFF
-      orthoMode = false;
-      console.log("ORTHO OFF");
+    // Ortho mode OFF
+    orthoMode = false;
+    console.log("ORTHO OFF");
+  } else if (event.key === "Control") {
+    snapMode = true;
+    console.log("SNAP ON");
   }
-  return { orthoMode };
+
+  return { orthoMode, snapMode };
 }
 
 

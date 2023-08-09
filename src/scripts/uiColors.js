@@ -12,12 +12,17 @@ export function uiColors(mode) {
         bgcolor = "white";
         gridColor = "gray";
         lineColor = "black";
-        highlightColor = "rgb(199, 0, 199)"
-    } else if (mode === "dark") {
+        highlightColor = "rgb(252, 0, 252)"
+    } else if (mode === "autocad") {
         bgcolor = "rgb(33, 40, 48)";
         gridColor = "lightgray";
         lineColor = "white";
         highlightColor = "cyan"
+    } else if (mode === "dark") {
+        bgcolor = "black";
+        gridColor = "gray";
+        lineColor = "rgb(125, 83, 255)";
+        highlightColor = "yellow"
     } else if (mode === "night") {
         bgcolor = "rgb(28, 10, 58)";
         gridColor = "gray";

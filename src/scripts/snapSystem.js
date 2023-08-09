@@ -22,7 +22,7 @@ var snapSquare = new Konva.Rect({
     // strokeScaleEnabled: false
 })
 
-export function snapDetect(stage, defaultLayer, pointer, isDrawing, orthoMode) {
+export function snapDetect(stage, defaultLayer, pointer, orthoMode, snapMode) {
     // Get all the shapes on the stage
     var lineCollection = stage.find('.line'); 
     var snapPosition = {x: null, y: null};
