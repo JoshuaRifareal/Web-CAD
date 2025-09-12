@@ -17,9 +17,9 @@ export declare const Konva: {
     _mouseInDblClickWindow: boolean;
     _touchInDblClickWindow: boolean;
     _pointerInDblClickWindow: boolean;
-    _mouseDblClickPointerId: any;
-    _touchDblClickPointerId: any;
-    _pointerDblClickPointerId: any;
+    _mouseDblClickPointerId: null;
+    _touchDblClickPointerId: null;
+    _pointerDblClickPointerId: null;
     pixelRatio: number;
     dragDistance: number;
     angleDeg: boolean;
